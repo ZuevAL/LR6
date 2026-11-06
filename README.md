@@ -54,6 +54,69 @@ Git уже установлен: версия 2.50.1 (Apple Git-155). Для а�
 
 ![Последние изменения в branch1](screenshots/08-last-changes-branch1.png)
 
+### 9. Слияние веток и разрешение конфликта
+
+Создана локальная ветка `branch1` из `origin/branch1`. При её слиянии в `master` возник конфликт в `mergefile.txt`.
+
+![Состояние репозитория при конфликте](screenshots/09-merge-conflict-status.png)
+
+В файле обнаружены маркеры `<<<<<<< HEAD`, `=======` и `>>>>>>> branch1`, разделяющие варианты текста двух веток.
+
+![Конфликтующие варианты текста](screenshots/10-conflict-markers.png)
+
+В текстовом редакторе варианты объединены, маркеры конфликта удалены. Сохранён следующий текст:
+
+```text
+Файл
+заполнен
+очень
+важной
+информацией
+противоречащей
+ветке
+master
+```
+
+Файл добавлен в индекс, слияние завершено коммитом `28dea7d` с комментарием «Разрешен конфликт при слиянии branch1 в master».
+
+![Чистое рабочее дерево после завершения слияния](screenshots/11-merge-completed-status.png)
+
+### 10. Удаление побочной ветки
+
+После успешного слияния локальная ветка `branch1` удалена командой `git branch -d branch1`.
+
+![Удаление branch1 и список оставшихся локальных веток](screenshots/12-branch1-deleted.png)
+
+### 11. Изменения и коммиты
+
+В `github-file.txt` последовательно добавлены строки «Первое изменение», «Второе изменение» и «Третье изменение». Каждое изменение зафиксировано отдельным коммитом с комментарием:
+
+- `970bbc8` — «Первое изменение файла»;
+- `acdacf5` — «Второе изменение файла»;
+- `37b50ff` — «Третье изменение файла».
+
+![Три коммита с изменениями файла](screenshots/13-three-file-commits.png)
+
+### 12. Откат коммита
+
+Командой `git revert --no-edit HEAD` отменён последний коммит. Создан коммит отката `4012fda`; строка «Третье изменение» удалена, первые два изменения сохранены.
+
+![Результат отката и содержимое файла](screenshots/14-revert-third-change.png)
+
+### 13. Ветка для отчёта
+
+Создана ветка `report`, выполнено переключение на неё.
+
+![Создание и выбор ветки report](screenshots/15-report-branch.png)
+
+### 14. Оформление отчёта
+
+Отчёт оформляется в `README.md` с использованием Markdown. Снимки экрана консоли и браузера находятся в отдельной папке `screenshots`. Лог команд приведён ниже без результатов их выполнения.
+
+В ходе оформления первая часть отчёта (пункты 1–8) зафиксирована коммитом `3c96dfd` с комментарием «Начат отчет: пункты 1–8». После фиксации рабочее дерево чистое.
+
+![Состояние ветки report после первого коммита отчёта](screenshots/16-report-first-commit-status.png)
+
 ## Лог команд
 
 ```bash
@@ -81,4 +144,33 @@ git log
 git log origin/branch1
 git show
 git show origin/branch1
+git checkout master
+git branch branch1 origin/branch1
+git merge branch1
+git status
+cat mergefile.txt
+open -e mergefile.txt
+git add mergefile.txt
+git commit -m "Разрешен конфликт при слиянии branch1 в master"
+git status
+git branch -d branch1
+git branch
+echo "Первое изменение" >> github-file.txt
+git add github-file.txt
+git commit -m "Первое изменение файла"
+echo "Второе изменение" >> github-file.txt
+git add github-file.txt
+git commit -m "Второе изменение файла"
+echo "Третье изменение" >> github-file.txt
+git add github-file.txt
+git commit -m "Третье изменение файла"
+git log
+git revert --no-edit HEAD
+cat github-file.txt
+git branch report
+git checkout report
+git branch
+git add README.md screenshots
+git commit -m "Начат отчет: пункты 1–8"
+git status
 ```
