@@ -18,9 +18,9 @@
 
 Создана копия репозитория [Kurtyanik/LR6](https://github.com/Kurtyanik/LR6) в личном аккаунте. Скопированы обе ветки: `master` и `branch1`.
 
-![Создание fork с копированием всех веток](screenshots/01-fork-all-branches.png)
+![Параметры создания fork](screenshots/01-fork-all-branches.jpeg)
 
-![Личный репозиторий после создания fork](screenshots/02-fork-created.png)
+![Личный репозиторий после создания fork](screenshots/02-fork-created.jpeg)
 
 ### 3–5. Установка, настройка Git и клонирование
 
@@ -117,6 +117,41 @@ master
 
 ![Состояние ветки report после первого коммита отчёта](screenshots/16-report-first-commit-status.png)
 
+Вторая часть отчёта (пункты 9–14) зафиксирована коммитом `2ba8faf` с комментарием «Дополнен отчет: пункты 9–14».
+
+![Второй коммит отчёта и чистое рабочее дерево](screenshots/17-report-second-commit.png)
+
+### 15. Форматированная история операций
+
+Получена история в формате: сокращённый хэш, дата, имя автора и комментарий.
+
+![История в требуемом формате](screenshots/18-formatted-history.png)
+
+История на момент подготовки финального коммита отчёта:
+
+```text
+2ba8faf 2026-11-06 4515 Зуев Е.К. Дополнен отчет: пункты 9–14
+3c96dfd 2026-11-06 4515 Зуев Е.К. Начат отчет: пункты 1–8
+4012fda 2026-11-06 4515 Зуев Е.К. Revert "Третье изменение файла"
+37b50ff 2026-11-06 4515 Зуев Е.К. Третье изменение файла
+acdacf5 2026-11-06 4515 Зуев Е.К. Второе изменение файла
+970bbc8 2026-11-06 4515 Зуев Е.К. Первое изменение файла
+28dea7d 2026-11-06 4515 Зуев Е.К. Разрешен конфликт при слиянии branch1 в master
+adc8c95 2026-11-06 Egor Добавлен файл через интерфейс GitHub
+921f53b 2020-11-21 Kurtyanik Обновление информации
+0f9f50d 2020-11-21 Kurtyanik Заполнил файл
+c08a654 2020-11-21 Kurtyanik Файл создан пустым
+3c6e913 2020-11-21 Kurtyanik Initial commit
+```
+
+### 16. Отправка изменений на GitHub
+
+После финальной фиксации отчёта для отправки веток `master` и `report` в личный репозиторий `ZuevAL/LR6` используется команда:
+
+```bash
+git push origin master report
+```
+
 ## Лог команд
 
 ```bash
@@ -173,4 +208,17 @@ git branch
 git add README.md screenshots
 git commit -m "Начат отчет: пункты 1–8"
 git status
+git add README.md screenshots
+git commit -m "Дополнен отчет: пункты 9–14"
+git status
+git log --format="%h %ad %an %s" --date=short
+```
+
+Финальная фиксация и отправка выполняются после сохранения этого отчёта:
+
+```bash
+git add README.md screenshots
+git commit -m "Завершен отчет: добавлена история"
+git status
+git push origin master report
 ```
